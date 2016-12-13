@@ -4,15 +4,21 @@
 		<script src="assets/js/index.js"></script>
 	</head>
 	<body>
-		<h1>hello taco</h1>
+		<h1>Arkadium IMDB Quiz</h1>
 
+		<button onclick="aboutView(about)">About</button>
 		<button onclick="switchView(text)">page 1</button>
 		<button onclick="switchView(image)">page 2</button>
+		<button onclick="searchView(search)">search</button>
 
 		<div id="content">
 			
 		</div>
 	</body>
+
+	<template id="about">
+		<p>About the application</p>
+	</template>
 
 	<template id="text">
 		<p id="innerText">text template</p>
@@ -20,5 +26,9 @@
 
 	<template id="image">
 		<img id="innerImage" width="75px" height="auto">
+	</template>
+
+	<template id="search">
+		<p></p>
 	</template>
 </html>
