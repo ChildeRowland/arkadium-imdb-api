@@ -2,12 +2,18 @@
   "name": "arkadium_assignment",
   "version": "1.0.0",
   "description": "full stack development assignment for Arkadium",
+  "repository": "https://github.com/ChildeRowland/arkadium-imdb-api",
+  "home": "https://arkadium-full-stack.herokuapp.com",
+  "author": {
+    "name": "Christopher Mehmed",
+    "email": "chrismehmed@gmail.com",
+    "url": "http://www.christophermehmed.com"
+  },
   "main": "app.js",
   "scripts": {
     "start": "gulp build && node build/app.js",
     "test": "cho \"Error: no test specified\" && exit 1"
   },
-  "author": "Christopher Mehmed",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.15.2",
