@@ -1,0 +1,24 @@
+{
+  "name": "arkadium_assignment",
+  "version": "1.0.0",
+  "description": "full stack development assignment for Arkadium",
+  "main": "app.js",
+  "scripts": {
+    "start": "gulp build && node build/app.js",
+    "test": "cho \"Error: no test specified\" && exit 1"
+  },
+  "author": "Christopher Mehmed",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0"
+  },
+  "devDependencies": {
+    "del": "^2.2.2",
+    "gulp": "^3.9.1"
+  },
+  "engines": {
+    "node": "5.4.1",
+    "npm": "3.3.12"
+  }
+}

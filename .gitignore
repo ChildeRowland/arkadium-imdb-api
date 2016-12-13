@@ -1,0 +1,22 @@
+
+# compiled output
+/build
+
+# dependencies
+/node_modules
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+*.launch
+.settings/
+
+#config
+
+# misc
+npm-debug.log
+testem.log
+
+#System Files
+.DS_Store
