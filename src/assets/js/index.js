@@ -1,5 +1,6 @@
 
 var data; // store object from API
+var score = [0,0];
 
 // clear the child elements from the content div
 function clearView() {
@@ -31,7 +32,7 @@ function searchView(elementId) {
 	clearView();
 
 	var http = new XMLHttpRequest();
-	var url = 'http://localhost:3000/search';
+	var url = window.location.href + 'search';
 	var method = 'GET';
 
 	http.open(method, url);

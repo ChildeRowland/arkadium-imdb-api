@@ -2,3 +2,7 @@ body {
 	background-color: lightblue;
 	color: white;
 }
+
+h4, p {
+	color: black;
+}
