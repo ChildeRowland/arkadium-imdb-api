@@ -6,6 +6,11 @@
 	<body>
 		<h1>Arkadium IMDB Quiz</h1>
 
+		<form id="search_form" method="get" onsubmit="adjustRoute()">
+			<input type="text" name="actor" placeholder="actor name">
+			<input type="submit" value="search">
+		</form>
+
 		<button onclick="aboutView(about)">About</button>
 		<button onclick="switchView(text)">page 1</button>
 		<button onclick="switchView(image)">page 2</button>

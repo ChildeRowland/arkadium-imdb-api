@@ -54,10 +54,19 @@ function searchView(elementId) {
 	http.send();
 }
 
+function searchImdb() {
+	let url = window.location.href + 'search';
+}
+
 function randomDataEntry() {
 	// get the results array length
 	// randomly pick a number, save it somewhere
 	// set the image and the title
+}
+
+function adjustRoute() {
+	console.log('func');
+	document.querySelector('#search_form').action = window.location.href + 'search';
 }
 
 window.onload = function() {
