@@ -21,40 +21,40 @@ app.use('/assets', express.static(path.join(__dirname, 'assets')));
 // });
 
 // search imdb with query parameters
-app.use('/search', function (req, res, next) {
-	console.log("anything");
-	if ( req.query ) {
-	var encodeActor = encodeURIComponent(req.query.actor);
-	var path = '/3/search/person?query=' + encodeActor + '&api_key=b2b35ce19b736641a658c422c9d537a7';
+// app.use('/search', function (req, res, next) {
+// 	console.log("anything");
+// 	if ( req.query ) {
+// 	var encodeActor = encodeURIComponent(req.query.actor);
+// 	var path = '/3/search/person?query=' + encodeActor + '&api_key=b2b35ce19b736641a658c422c9d537a7';
 
-	var options = {
-		"method": "GET",
-		"hostname": "api.themoviedb.org",
-		"port": null,
-		"path": path,
-		"headers": {}
-	};
+// 	var options = {
+// 		"method": "GET",
+// 		"hostname": "api.themoviedb.org",
+// 		"port": null,
+// 		"path": path,
+// 		"headers": {}
+// 	};
 
-	var req = http.request(options, function (response) {
-		var chunks = [];
+// 	var req = http.request(options, function (response) {
+// 		var chunks = [];
 
-		response.on("data", function (chunk) {
-			chunks.push(chunk);
-		});
+// 		response.on("data", function (chunk) {
+// 			chunks.push(chunk);
+// 		});
 
-		response.on("end", function () {
-			var body = Buffer.concat(chunks);
-			console.log(body);
-			return res.status(200).send(body.toString());
-		});
-	});
+// 		response.on("end", function () {
+// 			var body = Buffer.concat(chunks);
+// 			console.log(body);
+// 			return res.status(200).send(body.toString());
+// 		});
+// 	});
 
-	req.write("{}");
-	req.end();
-	} else {
-		next();
-	}
-});
+// 	req.write("{}");
+// 	req.end();
+// 	} else {
+// 		next();
+// 	}
+// });
 
 // entry point for SPA
 app.get('/*', function (req, res) {

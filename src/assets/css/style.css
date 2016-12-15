@@ -1,8 +1,49 @@
 body {
+	font-family: Tahoma, Geneva, sans-serif;
 	background-color: lightblue;
 	color: white;
 }
 
 h4, p {
 	color: black;
+}
+
+/***** CONTENT BOX *****/
+
+.content {
+	margin: 5px;
+}
+
+
+/***** NAVIGATION *****/
+
+.nav {
+	width: 90%;
+}
+
+.nav ul {
+	position: relative;
+	list-style: none;
+}
+
+.nav li {
+	display: inline;
+	float: left; /*remove for mobile*/
+}
+
+.nav a:hover {
+	background-color: #2c799d;
+}
+
+.nav .active {
+	box-shadow: 0px 0px 5px #fdff59;
+}
+
+.nav a {
+	background-color: #84a9bb;
+	display: block;
+	border-radius: 5px;
+	padding: 10px;
+	margin: 5px;
+	text-align: center;
 }

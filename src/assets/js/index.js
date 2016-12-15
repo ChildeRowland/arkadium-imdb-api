@@ -1,6 +1,10 @@
-var quizTemplate;
-var data; // store object from API
-var question // current question
+// template names
+var aboutTemplate, searchTemplate, quizTemplate;
+// store object from API
+var data;
+// current question
+var question;
+// user score, [correct, attemps]
 var score = [0,0];
 
 // clear the child elements from the content div
@@ -10,40 +14,50 @@ function clearView() {
 	}
 }
 
-function aboutView(elementId) {
-	clearView();
+// remove active class from links
+function removeActiveClass() {
+	let elements = document.querySelectorAll('a');
 
-	let clone = document.importNode(elementId.content, true);
-	content.appendChild(clone);
-}
-
-function switchView(elementId, string) {
-	clearView();
-
-	string = string || 'Lobsta Roll';
-
-	text.content.querySelector('p').innerHTML = string;
-
-	var clone = document.importNode(elementId.content, true);
-	content.appendChild(clone);
-}
-
-function handleKeyPress(event) {
-	if ( event.keyCode == 13 ) {
-		searchView();
-	}
+	elements.forEach(function(el) {
+		el.classList.remove('active');
+	})
 }
 
 function clearInput() {
 	document.querySelector('#actor-name').value = '';
 }
 
-// view search results
-function searchView() {
+function handleKeyPress(event) {
+	if ( event.keyCode == 13 ) {
+		searchApi();
+	}
+}
 
-	var actor = encodeURIComponent(document.querySelector('#actor-name').value);
-	var results = '{}';
-	var http = new XMLHttpRequest();
+function aboutView(element) {
+	clearView();
+	removeActiveClass();
+	element.classList.add('active');
+
+	let clone = document.importNode(aboutTemplate.content, true);
+	content.appendChild(clone);
+}
+
+function quizView(element) {
+	clearView();
+	removeActiveClass();
+	element.classList.add('active');
+
+	let question = randomDataEntry();
+
+	quizTemplate.content.querySelector('p').innerHTML = question.title;
+	var clone = document.importNode(quizTemplate.content, true);
+	content.appendChild(clone);
+}
+
+function searchApi() {
+	let actor = encodeURIComponent(document.querySelector('#actor-name').value);
+	let results = '{}';
+	let http = new XMLHttpRequest();
 
 	http.open('GET', 'https://api.themoviedb.org/3/search/person?query='+actor+'&api_key=b2b35ce19b736641a658c422c9d537a7');
 
@@ -59,16 +73,17 @@ function searchView() {
 	};
 
 	http.send(results);
+
 	clearInput();
 }
 
-function quizView() {
+// view search results
+function searchView(element) {
 	clearView();
+	removeActiveClass();
+	element.classList.add('active');
 
-	let question = randomDataEntry();
-
-	quizTemplate.content.querySelector('p').innerHTML = question.title;
-	var clone = document.importNode(quizTemplate.content, true);
+	var clone = document.importNode(searchTemplate.content, true);
 	content.appendChild(clone);
 }
 
@@ -81,17 +96,25 @@ function randomDataEntry() {
 }
 
 window.onload = function() {
-	// global variables for templates
+	// global variables for templates views 
 	var content = document.querySelector('#content');
-	var aboutTemplate = document.querySelector('#about');
-	var text = document.querySelector('#text');
-	var image = document.querySelector('#image');
+	aboutTemplate = document.querySelector('#about');
+	searchTemplate = document.querySelector('#search');
 	quizTemplate = document.querySelector('#quiz');
 
-	text.content.querySelector('p').innerHTML = 'BoggaYa';
-	image.content.querySelector('img').src = 'https://www.sencha.com/wp-content/uploads/2016/02/icon-sencha-test-studio.png';
+	// text.content.querySelector('p').innerHTML = 'BoggaYa';
+	// image.content.querySelector('img').src = 'https://www.sencha.com/wp-content/uploads/2016/02/icon-sencha-test-studio.png';
 }
 
+function switchView(elementId, string) {
+	clearView();
 
+	string = string || 'Lobsta Roll';
+
+	text.content.querySelector('p').innerHTML = string;
+
+	var clone = document.importNode(elementId.content, true);
+	content.appendChild(clone);
+}
 
 

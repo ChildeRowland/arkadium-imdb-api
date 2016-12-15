@@ -5,19 +5,26 @@
 	</head>
 	<body>
 		<h1>Arkadium IMDB Quiz</h1>
-
-		<input id="actor-name" type="text" name="actor" placeholder="actor name" onkeypress="handleKeyPress(event)">
+		
+		<div class="nav">
+			<ul>
+				<li>
+					<a onclick="aboutView(this)">about</a>
+				</li>
+				<li>
+					<a onclick="searchView(this)">search</a>
+				</li>
+				<li>
+					<a onclick="quizView(this)">quiz</a>
+				</li>
+			</ul>
+			<div style="clear:both;"></div>
+		</div>
 
 		<br>
 
-		<button onclick="aboutView(about)">About</button>
-		<button onclick="switchView(text)">page 1</button>
-		<button onclick="switchView(image)">page 2</button>
-		<button onclick="quizView()">quiz</button>
+		<div id="content"></div>
 
-		<div id="content">
-			
-		</div>
 	</body>
 
 	<template id="about">
@@ -34,8 +41,12 @@
 		<p>It is a quiz, where users guess the quality of a film, based on imdb.com user ratings</p>
 	</template>
 
-	<template id="text">
-		<p id="innerText">text template</p>
+	<template id="search">
+		<input id="actor-name" 
+			   type="text" 
+			   name="actor" 
+			   placeholder="search by actor, then hit enter" 
+			   onkeypress="handleKeyPress(event)">
 	</template>
 
 	<template id="image">
