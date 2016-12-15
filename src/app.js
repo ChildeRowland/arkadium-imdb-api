@@ -16,8 +16,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname));
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
 
+// app.get('*', function (req, res, next) {
+// 	console.log(req.query);
+// });
+
 // search imdb with query parameters
-app.get('/search', function (req, res, next) {
+app.use('/search', function (req, res, next) {
+	console.log("anything");
+	if ( req.query ) {
 	var encodeActor = encodeURIComponent(req.query.actor);
 	var path = '/3/search/person?query=' + encodeActor + '&api_key=b2b35ce19b736641a658c422c9d537a7';
 
@@ -29,51 +35,30 @@ app.get('/search', function (req, res, next) {
 		"headers": {}
 	};
 
-	var req = http.request(options, function (res) {
+	var req = http.request(options, function (response) {
 		var chunks = [];
 
-		res.on("data", function (chunk) {
+		response.on("data", function (chunk) {
 			chunks.push(chunk);
 		});
 
-		res.on("end", function () {
+		response.on("end", function () {
 			var body = Buffer.concat(chunks);
-			console.log(body.toString());
+			console.log(body);
+			return res.status(200).send(body.toString());
 		});
 	});
 
 	req.write("{}");
 	req.end();
-
-	next();
+	} else {
+		next();
+	}
 });
-
-// temp route for search reature
-// app.get('/search', function (req, res, next) {
-// 	if (env == 'development') {
-// 		console.log(config.development.url);
-// 	}
-
-// 	return res.status(200).send(mockData);
-// 	// Quiz.find(function (err, result) {
-// 	// 	if (err) {
-// 	// 		return res.status(500).json({
-// 	// 			code: 500,
-// 	// 			message: "An error occurred while getting quizzes",
-// 	// 			error: err
-// 	// 		});
-// 	// 	}
-// 	// 	res.status(202).json({
-// 	// 		code: 202,
-// 	// 		message: "Success getting the quizzes",
-// 	// 		obj: result
-// 	// 	});
-// 	// });
-// });
 
 // entry point for SPA
 app.get('/*', function (req, res) {
-	res.sendFile(path.join(__dirname,'index.html'))
+	res.sendFile(path.join(__dirname,'index.html'));
 });
 
 //catch 404 and forward to error handler

@@ -1,5 +1,6 @@
-
+var quizTemplate;
 var data; // store object from API
+var question // current question
 var score = [0,0];
 
 // clear the child elements from the content div
@@ -19,7 +20,7 @@ function aboutView(elementId) {
 function switchView(elementId, string) {
 	clearView();
 
-	string = string || "Lobsta Roll";
+	string = string || 'Lobsta Roll';
 
 	text.content.querySelector('p').innerHTML = string;
 
@@ -27,46 +28,56 @@ function switchView(elementId, string) {
 	content.appendChild(clone);
 }
 
-// view search results
-function searchView(elementId) {
-	clearView();
-
-	var http = new XMLHttpRequest();
-	var url = window.location.href + 'search';
-	var method = 'GET';
-
-	http.open(method, url);
-	http.onreadystatechange = function() {
-		if ( http.readyState === XMLHttpRequest.DONE && http.status === 200 ) {
-			data = JSON.parse(http.responseText);
-
-			elementId.content.querySelector('p').innerHTML = data;
-			var clone = document.importNode(elementId.content, true);
-			content.appendChild(clone);
-
-			console.log(data);
-		} else if ( http.readyState == XMLHttpRequest.DONE && http.status !== 200 ) {
-			// add redirect for no values found
-			console.log('Error');
-		} 
+function handleKeyPress(event) {
+	if ( event.keyCode == 13 ) {
+		searchView();
 	}
-
-	http.send();
 }
 
-function searchImdb() {
-	let url = window.location.href + 'search';
+function clearInput() {
+	document.querySelector('#actor-name').value = '';
+}
+
+// view search results
+function searchView() {
+
+	var actor = encodeURIComponent(document.querySelector('#actor-name').value);
+	var results = '{}';
+	var http = new XMLHttpRequest();
+
+	http.open('GET', 'https://api.themoviedb.org/3/search/person?query='+actor+'&api_key=b2b35ce19b736641a658c422c9d537a7');
+
+	http.onreadystatechange = function () {
+		if (this.readyState === this.DONE && http.status === 200) {
+
+			data = JSON.parse(this.responseText);
+			console.log(data);
+
+		} else if ( http.readyState == XMLHttpRequest.DONE && http.status !== 200 ) {
+			console.log('error');
+		}
+	};
+
+	http.send(results);
+	clearInput();
+}
+
+function quizView() {
+	clearView();
+
+	let question = randomDataEntry();
+
+	quizTemplate.content.querySelector('p').innerHTML = question.title;
+	var clone = document.importNode(quizTemplate.content, true);
+	content.appendChild(clone);
 }
 
 function randomDataEntry() {
-	// get the results array length
-	// randomly pick a number, save it somewhere
-	// set the image and the title
-}
-
-function adjustRoute() {
-	console.log('func');
-	document.querySelector('#search_form').action = window.location.href + 'search';
+	let count = data.results[0].known_for.length;
+	let idx = Math.floor(Math.random() * count);
+	let question = data.results[0].known_for[idx];
+	data.results[0].known_for[idx] = false;
+	return question;
 }
 
 window.onload = function() {
@@ -75,11 +86,10 @@ window.onload = function() {
 	var aboutTemplate = document.querySelector('#about');
 	var text = document.querySelector('#text');
 	var image = document.querySelector('#image');
-	var searchTemplate = document.querySelector('#search');
+	quizTemplate = document.querySelector('#quiz');
 
-	text.content.querySelector('p').innerHTML = "BoggaYa";
-	image.content.querySelector('img').src = "https://www.sencha.com/wp-content/uploads/2016/02/icon-sencha-test-studio.png";
-
+	text.content.querySelector('p').innerHTML = 'BoggaYa';
+	image.content.querySelector('img').src = 'https://www.sencha.com/wp-content/uploads/2016/02/icon-sencha-test-studio.png';
 }
 
 

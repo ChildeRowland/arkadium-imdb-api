@@ -6,15 +6,14 @@
 	<body>
 		<h1>Arkadium IMDB Quiz</h1>
 
-		<form id="search_form" method="get" onsubmit="adjustRoute()">
-			<input type="text" name="actor" placeholder="actor name">
-			<input type="submit" value="search">
-		</form>
+		<input id="actor-name" type="text" name="actor" placeholder="actor name" onkeypress="handleKeyPress(event)">
+
+		<br>
 
 		<button onclick="aboutView(about)">About</button>
 		<button onclick="switchView(text)">page 1</button>
 		<button onclick="switchView(image)">page 2</button>
-		<button onclick="searchView(search)">search</button>
+		<button onclick="quizView()">quiz</button>
 
 		<div id="content">
 			
@@ -43,7 +42,7 @@
 		<img id="innerImage" width="75px" height="auto">
 	</template>
 
-	<template id="search">
+	<template id="quiz">
 		<p></p>
 	</template>
 </html>
