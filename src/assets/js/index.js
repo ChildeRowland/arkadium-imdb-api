@@ -62,10 +62,13 @@ function quizView(element) {
 	removeActiveClass();
 	element.classList.add('active');
 
+	var imageFormat = 'https://image.tmdb.org/t/p/w500';
+
 	if ( data ) {
 		let question = randomDataEntry();
 
 		quizTemplate.content.querySelector('p').innerHTML = question.title;
+		quizTemplate.content.querySelector('img').src = imageFormat+question.poster_path;
 	} else {
 		quizTemplate.content.querySelector('p').innerHTML = "Search for your favorite actor before taking the quiz";
 	}
