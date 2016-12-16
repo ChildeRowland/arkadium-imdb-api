@@ -1,7 +1,15 @@
 body {
 	font-family: Tahoma, Geneva, sans-serif;
-	background-color: lightblue;
+	margin: 15px 15px 0 15px; 
+	background-color: #d1e5ef;
 	color: white;
+}
+
+h1 {
+	display: inline-block;
+	margin-left: inherit;
+	border-bottom: 1px solid yellow;
+	box-shadow: 0 4px 2px -2px #fdff59;
 }
 
 h4, p {
@@ -22,11 +30,25 @@ h4, p {
 input {
 	padding: 0.4em 0.25em;
 	width: 100%;
-	background: transparent;
+	margin-bottom: 10px;
+	border-radius: 25px;
+	background-color: #f2f4f7; 
+	/*background: transparent;*/
 	color: #AFB5BB;
-	font-size: 1.55em;
+	font-size: 1.3em;
 }
 
+/***** SEARCH RESULTS *****/
+
+.profile-picture {
+	
+}
+
+/***** QUIZ *****/
+
+.hidden {
+	display: none;
+}
 
 /***** NAVIGATION *****/
 
@@ -37,6 +59,10 @@ input {
 .nav ul {
 	position: relative;
 	list-style: none;
+}
+
+.nav li:first-of-type {
+	margin-left: -25px;
 }
 
 .nav li {
@@ -60,3 +86,19 @@ input {
 	margin: 5px;
 	text-align: center;
 }
+
+
+/***** ABOUT PAGE *****/
+
+#content div {
+	background-color: #ffffff;
+    border: 1px solid black;
+    opacity: 0.6;
+}
+
+#content div p {
+	margin: 10px;
+}
+
+
+

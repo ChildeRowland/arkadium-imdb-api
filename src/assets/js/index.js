@@ -1,11 +1,15 @@
+// main view for templates
+var content;
 // template names
 var aboutTemplate, searchTemplate, quizTemplate;
 // store object from API
-var data;
+var actors, data;
 // current question
 var question;
 // user score, [correct, attemps]
 var score = [0,0];
+// format imdb image
+var imageFormat = 'https://image.tmdb.org/t/p/';
 
 // clear the child elements from the content div
 function clearView() {
@@ -62,13 +66,12 @@ function quizView(element) {
 	removeActiveClass();
 	element.classList.add('active');
 
-	var imageFormat = 'https://image.tmdb.org/t/p/w500';
-
 	if ( data ) {
 		let question = randomDataEntry();
 
 		quizTemplate.content.querySelector('p').innerHTML = question.title;
-		quizTemplate.content.querySelector('img').src = imageFormat+question.poster_path;
+		quizTemplate.content.querySelector('img').src = imageFormat+'/w500/'+question.poster_path;
+		quizTemplate.content.querySelector('img').classList.remove('hidden');
 	} else {
 		quizTemplate.content.querySelector('p').innerHTML = "Search for your favorite actor before taking the quiz";
 	}
@@ -89,8 +92,10 @@ function searchApi() {
 	http.onreadystatechange = function () {
 		if (this.readyState === this.DONE && http.status === 200) {
 
-			data = JSON.parse(this.responseText);
-			console.log(data);
+			actors = JSON.parse(this.responseText);
+			console.log(actors);
+
+			addImgSearch();
 
 		} else if ( http.readyState == XMLHttpRequest.DONE && http.status !== 200 ) {
 			console.log('error');
@@ -103,6 +108,43 @@ function searchApi() {
 	clearInput();
 }
 
+function addImgSearch() {
+	// limit the number of results
+	let maxIdx = Math.min(5, actors.results.length);
+	// iterate through the results and render profile picture
+	for ( let i = 0; i < maxIdx; i++) {
+		let img = new Image();
+		img.src = imageFormat+'/w185/'+actors.results[i].profile_path;
+		img.className = 'profile-picture';
+		img.onclick = function(){getActor(actors.results[i].id)};
+		content.appendChild(img);
+	}
+}
+
+function getActor(id) {
+	console.log(id);
+
+	let url = window.location.href + 'actor/' + id;
+	console.log(url);
+	let http = new XMLHttpRequest();
+
+	http.open('GET', url);
+
+	http.onreadystatechange = function () {
+		if (this.readyState === this.DONE && http.status === 200) {
+
+			data = JSON.parse(this.responseText);
+			console.log(data);
+
+		} else if ( http.readyState == XMLHttpRequest.DONE && http.status !== 200 ) {
+			console.log('error');
+			// show some actor names
+		}
+	};
+
+	http.send();
+}
+
 // return a random movie for the quiz
 function randomDataEntry() {
 	let count = data.results[0].known_for.length;
@@ -113,11 +155,13 @@ function randomDataEntry() {
 }
 
 window.onload = function() {
-	// global variables for templates views 
-	var content = document.querySelector('#content');
+	// assign variables for templates views
+	content = document.querySelector('#content');
 	aboutTemplate = document.querySelector('#about');
 	searchTemplate = document.querySelector('#search');
 	quizTemplate = document.querySelector('#quiz');
+
+	aboutView(document.querySelector('#default-view'));
 }
 
 
@@ -135,5 +179,6 @@ function switchView(elementId, string) {
 
 // image.content.querySelector('img').src = 'https://www.sencha.com/wp-content/uploads/2016/02/icon-sencha-test-studio.png';
 
+// document.addEventListener('DOMContentLoaded', init);
 
 

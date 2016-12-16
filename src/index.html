@@ -9,7 +9,10 @@
 		<div class="nav">
 			<ul>
 				<li>
-					<a onclick="aboutView(this)">about</a>
+					<a onclick="aboutView(this)" 
+					   id="default-view">
+					   about
+					</a>
 				</li>
 				<li>
 					<a onclick="searchView(this)">search</a>
@@ -28,20 +31,17 @@
 	</body>
 
 	<template id="about">
-		<h4>What is this?</h4>
-		<p>A single page, full stack Javascript application.</p>
-
-		<h4>What kind of frameworks are you using?</h4>
-		<p>None. This SPA is hand coded and is pretty vanilla.</p>
-
-		<h4>Why aren't you using libraries?</h4>
-		<p>There are some examples of frameworks and libraries on my portfolio site.  I wanted to challenge myself to build this application from scratch.</p>
-
-		<h4>Why is it here?</h4>
-		<p>This is a coding challenge for the company Arkadium.</p>
-
-		<h4>What does it do?</h4>
-		<p>It is a quiz, where users guess the quality of a film, based on imdb.com user ratings.</p>
+		<div>
+			<p>
+				This is s single page, full stack Javascript application. I wanted to challenge myself to deploy an app without frameworks or libraries.  
+			</p>	
+			<p>
+				This is a simple quiz; users can look up an actor and answer some questions about him or her. All data is courtesy the The Movie Database API. For more information, visit 
+				<a href="http://www.themoviedb.org/" target="_blank">
+					http://www.themoviedb.org/
+				</a> 
+			</p>
+		</div>
 	</template>
 
 	<template id="search">
@@ -57,7 +57,7 @@
 	</template>
 
 	<template id="quiz">
-		<img height="500px">
+		<img height="500px" class="hidden">
 		<p></p>
 	</template>
 </html>

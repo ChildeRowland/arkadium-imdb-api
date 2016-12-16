@@ -43,7 +43,43 @@ app.use('/search', function (req, res, next) {
 
 			response.on("end", function () {
 				var body = Buffer.concat(chunks);
-				console.log(body);
+				console.log(JSON.parse(body.toString()));
+				res.json(JSON.parse(body.toString()));
+			});
+		});
+
+		req.write("{}");
+		req.end();
+	} else {
+		next();
+	}
+});
+
+// get actor by id
+app.use('/actor/:id', function (req, res, next) {
+
+	if ( req.params ) {
+
+		var path = 'https://api.themoviedb.org/3/person/'+req.params.id+'/movie_credits?api_key='+apiKey;
+		console.log(path);
+		var options = {
+			"method": "GET",
+			"hostname": "api.themoviedb.org",
+			"port": null,
+			"path": path,
+			"headers": {}
+		};
+
+		var req = http.request(options, function (response) {
+			var chunks = [];
+
+			response.on("data", function (chunk) {
+				chunks.push(chunk);
+			});
+
+			response.on("end", function () {
+				var body = Buffer.concat(chunks);
+				console.log(JSON.parse(body.toString()));
 				res.json(JSON.parse(body.toString()));
 			});
 		});
