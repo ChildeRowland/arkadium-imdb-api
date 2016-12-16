@@ -1,56 +1,55 @@
-var express 		= 	require('express');
-var path 			= 	require('path');
-var bodyParser 		= 	require('body-parser');
-var config 			= 	require('./server/config');
-var http 			= 	require('http');
+var express 	= 	require('express');
+var path 		= 	require('path');
+var bodyParser 	= 	require('body-parser');
+var http 		= 	require('http');
 
-var mockData 		= 	require("./server/themoviedb_data.json");
+var app 		= 	express();
+var port 		= 	process.env.PORT || 3000;
+var env 		= 	process.env.NODE_ENV || 'development';
 
-var app = express();
-var port = process.env.PORT || 3000;
+var config 		= 	require('./server/config');
+var apiKey 		=   config.apiKey3;
 
-var env = process.env.NODE_ENV || 'development';
+// remove for deployment
+var mockData 	= 	require("./server/themoviedb_data.json");
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname));
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
 
-// app.get('/taco', function (req, res, next) {
-// 	res.json(mockData);
-// });
 
 // search imdb with query parameters
-app.use('/taco', function (req, res, next) {
-	console.log("anything");
+app.use('/search', function (req, res, next) {
+
 	if ( req.query ) {
-	var encodeActor = encodeURIComponent(req.query.actor);
-	var path = '/3/search/person?query=tom%20cruise&api_key=b2b35ce19b736641a658c422c9d537a7';
+		var encodeActor = encodeURIComponent(req.query.actor);
+		var path = '/3/search/person?query='+encodeActor+'&api_key='+apiKey;
 
-	var options = {
-		"method": "GET",
-		"hostname": "api.themoviedb.org",
-		"port": null,
-		"path": path,
-		"headers": {}
-	};
+		var options = {
+			"method": "GET",
+			"hostname": "api.themoviedb.org",
+			"port": null,
+			"path": path,
+			"headers": {}
+		};
 
-	var req = http.request(options, function (response) {
-		var chunks = [];
+		var req = http.request(options, function (response) {
+			var chunks = [];
 
-		response.on("data", function (chunk) {
-			chunks.push(chunk);
+			response.on("data", function (chunk) {
+				chunks.push(chunk);
+			});
+
+			response.on("end", function () {
+				var body = Buffer.concat(chunks);
+				console.log(body);
+				res.json(JSON.parse(body.toString()));
+			});
 		});
 
-		response.on("end", function () {
-			var body = Buffer.concat(chunks);
-			console.log(body);
-			res.json(JSON.parse(body.toString()));
-		});
-	});
-
-	req.write("{}");
-	req.end();
+		req.write("{}");
+		req.end();
 	} else {
 		next();
 	}

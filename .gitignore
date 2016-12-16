@@ -12,11 +12,12 @@
 *.launch
 .settings/
 
-#config
+# config
+config*
 
 # misc
 npm-debug.log
 testem.log
 
-#System Files
+# System Files
 .DS_Store

@@ -23,16 +23,20 @@ function removeActiveClass() {
 	})
 }
 
+// clear the search input after use submits
 function clearInput() {
 	document.querySelector('#actor-name').value = '';
 }
 
+// check for user search input
 function handleKeyPress(event) {
 	if ( event.keyCode == 13 ) {
 		searchApi();
 	}
 }
 
+// VIEWS
+// about the application
 function aboutView(element) {
 	clearView();
 	removeActiveClass();
@@ -42,21 +46,40 @@ function aboutView(element) {
 	content.appendChild(clone);
 }
 
+// show the search input
+function searchView(element) {
+	clearView();
+	removeActiveClass();
+	element.classList.add('active');
+
+	let clone = document.importNode(searchTemplate.content, true);
+	content.appendChild(clone);
+}
+
+// quiz
 function quizView(element) {
 	clearView();
 	removeActiveClass();
 	element.classList.add('active');
 
-	let question = randomDataEntry();
+	if ( data ) {
+		let question = randomDataEntry();
 
-	quizTemplate.content.querySelector('p').innerHTML = question.title;
-	var clone = document.importNode(quizTemplate.content, true);
+		quizTemplate.content.querySelector('p').innerHTML = question.title;
+	} else {
+		quizTemplate.content.querySelector('p').innerHTML = "Search for your favorite actor before taking the quiz";
+	}
+
+	let clone = document.importNode(quizTemplate.content, true);
 	content.appendChild(clone);
 }
 
-function helloTaco() {
+// send a request to the server and handle the results
+function searchApi() {
+	let actor = encodeURIComponent(document.querySelector('#actor-name').value);
+	let url = window.location.href + 'search' + '?actor=' + actor;
+
 	let http = new XMLHttpRequest();
-	let url = window.location.href + 'taco';
 
 	http.open('GET', url);
 
@@ -68,45 +91,16 @@ function helloTaco() {
 
 		} else if ( http.readyState == XMLHttpRequest.DONE && http.status !== 200 ) {
 			console.log('error');
+			// show some actor names
 		}
 	};
 
 	http.send();
-}
-
-function searchApi() {
-	let actor = encodeURIComponent(document.querySelector('#actor-name').value);
-	let results = '{}';
-	let http = new XMLHttpRequest();
-
-	http.open('GET', 'https://api.themoviedb.org/3/search/person?query='+actor+'&api_key=b2b35ce19b736641a658c422c9d537a7');
-
-	http.onreadystatechange = function () {
-		if (this.readyState === this.DONE && http.status === 200) {
-
-			data = JSON.parse(this.responseText);
-			console.log(data);
-
-		} else if ( http.readyState == XMLHttpRequest.DONE && http.status !== 200 ) {
-			console.log('error');
-		}
-	};
-
-	http.send(results);
 
 	clearInput();
 }
 
-// view search results
-function searchView(element) {
-	clearView();
-	removeActiveClass();
-	element.classList.add('active');
-
-	var clone = document.importNode(searchTemplate.content, true);
-	content.appendChild(clone);
-}
-
+// return a random movie for the quiz
 function randomDataEntry() {
 	let count = data.results[0].known_for.length;
 	let idx = Math.floor(Math.random() * count);
@@ -121,11 +115,10 @@ window.onload = function() {
 	aboutTemplate = document.querySelector('#about');
 	searchTemplate = document.querySelector('#search');
 	quizTemplate = document.querySelector('#quiz');
-
-	// text.content.querySelector('p').innerHTML = 'BoggaYa';
-	// image.content.querySelector('img').src = 'https://www.sencha.com/wp-content/uploads/2016/02/icon-sencha-test-studio.png';
 }
 
+
+// remove for deployment 
 function switchView(elementId, string) {
 	clearView();
 
@@ -136,5 +129,8 @@ function switchView(elementId, string) {
 	var clone = document.importNode(elementId.content, true);
 	content.appendChild(clone);
 }
+
+// image.content.querySelector('img').src = 'https://www.sencha.com/wp-content/uploads/2016/02/icon-sencha-test-studio.png';
+
 
 
