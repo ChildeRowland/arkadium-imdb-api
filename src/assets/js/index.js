@@ -136,6 +136,8 @@ function getActor(id) {
 			data = JSON.parse(this.responseText);
 			console.log(data);
 
+			quizView(quizTemplate);
+
 		} else if ( http.readyState == XMLHttpRequest.DONE && http.status !== 200 ) {
 			console.log('error');
 			// show some actor names
@@ -147,10 +149,10 @@ function getActor(id) {
 
 // return a random movie for the quiz
 function randomDataEntry() {
-	let count = data.results[0].known_for.length;
+	let count = data.cast.length;
 	let idx = Math.floor(Math.random() * count);
-	let question = data.results[0].known_for[idx];
-	data.results[0].known_for[idx] = false;
+	let question = data.cast[idx];
+	data.cast[idx] = false;
 	return question;
 }
 
