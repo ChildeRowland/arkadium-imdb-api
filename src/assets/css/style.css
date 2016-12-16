@@ -10,8 +10,21 @@ h4, p {
 
 /***** CONTENT BOX *****/
 
-.content {
-	margin: 5px;
+#content {
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+/***** INPUT FIELD *****/
+
+input {
+	padding: 0.4em 0.25em;
+	width: 100%;
+	background: transparent;
+	color: #AFB5BB;
+	font-size: 1.55em;
 }
 
 

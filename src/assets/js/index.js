@@ -54,6 +54,26 @@ function quizView(element) {
 	content.appendChild(clone);
 }
 
+function helloTaco() {
+	let http = new XMLHttpRequest();
+	let url = window.location.href + 'taco';
+
+	http.open('GET', url);
+
+	http.onreadystatechange = function () {
+		if (this.readyState === this.DONE && http.status === 200) {
+
+			data = JSON.parse(this.responseText);
+			console.log(data);
+
+		} else if ( http.readyState == XMLHttpRequest.DONE && http.status !== 200 ) {
+			console.log('error');
+		}
+	};
+
+	http.send();
+}
+
 function searchApi() {
 	let actor = encodeURIComponent(document.querySelector('#actor-name').value);
 	let results = '{}';
