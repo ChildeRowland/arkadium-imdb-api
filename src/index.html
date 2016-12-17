@@ -20,6 +20,9 @@
 				<li>
 					<a onclick="quizView(this)">quiz</a>
 				</li>
+				<li>
+					<a onclick="scoreView(this)">score</a>
+				</li>
 			</ul>
 			<div style="clear:both;"></div>
 		</div>
@@ -52,14 +55,10 @@
 			   onkeypress="submitFromUser(event, searchApi)">
 	</template>
 
-	<template id="image">
-		<img id="innerImage" width="75px" height="auto">
-	</template>
-
 	<template id="quiz">
 		<div class="quiz-back-drop">
 		<p></p>
-		<img height="500px" 
+		<img height="400px" 
 			 class="hidden" 
 			 onerror="hideBrokenImage(this)">
 		<input type="text"
@@ -67,6 +66,17 @@
 			   name="year"
 			   placeholder="YYYY, then hit enter"
 			   onkeypress="submitFromUser(event, checkAnswer)">
+		<p id="correct-answer">
+			
+		</p>
+		</div>
+	</template>
+
+	<template id="score">
+		<div>
+			<p>
+				Search, choose, answer, score:
+			</p>
 		</div>
 	</template>
 </html>

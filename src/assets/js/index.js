@@ -1,7 +1,7 @@
 // main view for templates
 var content;
 // template names
-var aboutTemplate, searchTemplate, quizTemplate;
+var aboutTemplate, searchTemplate, quizTemplate, scoreTemplate;
 // store object from API
 var actors, data;
 // current question
@@ -91,6 +91,30 @@ function quizView(element) {
 	let clone = document.importNode(quizTemplate.content, true);
 	content.appendChild(clone);
 }
+
+// score
+function scoreView(element) {
+	clearView();
+	removeActiveClass();
+	element.classList.add('active');
+
+	let total = [0,0];
+
+	if ( score.length > 0 ) {
+		score.forEach(function (arr) {
+			total[0] += arr[1] // correct;
+			total[1] += arr[2] // attempts
+		})
+	}
+
+	let p = document.createElement('P');
+	p.innerHTML = total.join(' correct out of ');
+	//scoreTemplate.appendChild(p);
+
+	let clone = document.importNode(scoreTemplate.content, true);
+	content.appendChild(clone);
+	content.appendChild(p);
+} 
 
 // send a request to the server and handle the results
 function searchApi() {
@@ -182,11 +206,26 @@ function getActor(id, name) {
 }
 
 function checkAnswer() {
-	// comapre event.target.value with question.title;
-	// push values to score array;
-	// clear the input
-	// call randomDataEntry
-	console.log(event.target.value);
+	let correctAnswer = false;
+	let userAnswer = event.target.value.toString();
+	let idx = score.length - 1;
+
+	if ( question.release_date ) {
+		let year = question.release_date.slice(0,4)
+
+		if ( userAnswer === year ) {
+			correctAnswer = true;
+		}
+
+		if ( correctAnswer ) {
+			score[idx][1]++;
+		}
+
+		score[idx][2]++;
+	}
+	
+	console.log(userAnswer, question.release_date, idx);
+	console.log(score);
 	question = null;
 	quizView(quizTemplate);
 }
@@ -206,6 +245,7 @@ window.onload = function() {
 	aboutTemplate = document.querySelector('#about');
 	searchTemplate = document.querySelector('#search');
 	quizTemplate = document.querySelector('#quiz');
+	scoreTemplate = document.querySelector('#score');
 
 	aboutView(document.querySelector('#default-view'));
 }
