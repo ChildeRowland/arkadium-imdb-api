@@ -35,6 +35,7 @@ function clearInput() {
 // check for user search input
 function handleKeyPress(event) {
 	if ( event.keyCode == 13 ) {
+		clearImgSearch();
 		searchApi();
 	}
 }
@@ -109,15 +110,34 @@ function searchApi() {
 }
 
 function addImgSearch() {
+	// create a div to hold to images
+	let div = document.createElement('DIV');
+	div.className = 'photo-back-drop';
+	content.appendChild(div);
+	// append a p tag for instruction
+	let paragraph = document.createElement('P');
+	paragraph.innerHTML = "Click a photo to select an actor:"
+	div.appendChild(paragraph);
+
 	// limit the number of results
 	let maxIdx = Math.min(5, actors.results.length);
 	// iterate through the results and render profile picture
 	for ( let i = 0; i < maxIdx; i++) {
+		let actorId = actors.results[i].id;
 		let img = new Image();
+
 		img.src = imageFormat+'/w185/'+actors.results[i].profile_path;
 		img.className = 'profile-picture';
-		img.onclick = function(){getActor(actors.results[i].id)};
-		content.appendChild(img);
+		img.onerror = function(){ this.style.display='none' }; // check for broken image path
+		img.onclick = function(){ getActor(actorId) };
+		div.appendChild(img);
+	}
+}
+
+function clearImgSearch() {
+	let div = document.querySelector('.photo-back-drop');
+	if ( div ) {
+		content.removeChild(div);
 	}
 }
 
@@ -165,7 +185,6 @@ window.onload = function() {
 
 	aboutView(document.querySelector('#default-view'));
 }
-
 
 // remove for deployment 
 function switchView(elementId, string) {
