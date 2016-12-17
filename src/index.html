@@ -5,7 +5,7 @@
 	</head>
 	<body>
 		<h1>Arkadium IMDB Quiz</h1>
-		
+
 		<div class="nav">
 			<ul>
 				<li>
@@ -49,7 +49,7 @@
 			   type="text" 
 			   name="actor" 
 			   placeholder="search by actor, then hit enter" 
-			   onkeypress="handleKeyPress(event)">
+			   onkeypress="submitFromUser(event, searchApi)">
 	</template>
 
 	<template id="image">
@@ -63,7 +63,10 @@
 			 class="hidden" 
 			 onerror="hideBrokenImage(this)">
 		<input type="text"
-			   class="hidden">
+			   class="hidden"
+			   name="year"
+			   placeholder="YYYY, then hit enter"
+			   onkeypress="submitFromUser(event, checkAnswer)">
 		</div>
 	</template>
 </html>

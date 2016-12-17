@@ -7,7 +7,7 @@ var actors, data;
 // current question
 var question;
 // user score, [correct, attemps]
-var score = [0,0];
+var score = [];
 // format imdb image
 var imageFormat = 'https://image.tmdb.org/t/p/';
 
@@ -38,10 +38,10 @@ function hideBrokenImage(element) {
 }
 
 // check for user search input
-function handleKeyPress(event) {
+function submitFromUser(event, callback) {
 	if ( event.keyCode == 13 ) {
-		clearImgSearch();
-		searchApi();
+		clearSearch(event.target);
+		callback();
 	}
 }
 
@@ -72,15 +72,20 @@ function quizView(element) {
 	removeActiveClass();
 	element.classList.add('active');
 
-	if ( data ) {
-		let question = randomDataEntry();
+	if ( data && data.cast.length > 0 ) {
+		if ( !question ) {
+			question = randomDataEntry();
 
-		quizTemplate.content.querySelector('p').innerHTML = question.title;
-		quizTemplate.content.querySelector('img').src = imageFormat+'/w500/'+question.poster_path;
-		quizTemplate.content.querySelector('img').classList.remove('hidden');
-		quizTemplate.content.querySelector('input').classList.remove('hidden');
+			quizTemplate.content.querySelector('p').innerHTML = question.title;
+			quizTemplate.content.querySelector('img').src = imageFormat+'/w500/'+question.poster_path;
+			quizTemplate.content.querySelector('img').classList.remove('hidden');
+			quizTemplate.content.querySelector('input').classList.remove('hidden');
+		}
 	} else {
 		quizTemplate.content.querySelector('p').innerHTML = "Search for your favorite actor before taking the quiz";
+
+		quizTemplate.content.querySelector('img').classList.add('hidden');
+		quizTemplate.content.querySelector('input').classList.add('hidden');
 	}
 
 	let clone = document.importNode(quizTemplate.content, true);
@@ -130,25 +135,28 @@ function addImgSearch() {
 	// iterate through the results and render profile picture
 	for ( let i = 0; i < maxIdx; i++) {
 		let actorId = actors.results[i].id;
+		let actorName = actors.results[i].name
 		let img = new Image();
 
 		img.src = imageFormat+'/w185/'+actors.results[i].profile_path;
 		img.className = 'profile-picture';
 		img.onerror = function(){ hideBrokenImage(img) }; // check for broken image path
-		img.onclick = function(){ getActor(actorId) };
+		img.onclick = function(){ getActor(actorId, actorName) };
 		div.appendChild(img);
 	}
 }
 
-function clearImgSearch() {
-	let div = document.querySelector('.photo-back-drop');
-	if ( div ) {
+function clearSearch(child) {
+	let div = child.parentElement;
+	// delete actor search results
+	if ( div.class === 'photo-back-drop' ) {
 		content.removeChild(div);
 	}
 }
 
-function getActor(id) {
-	console.log(id);
+function getActor(id, name) {
+	question = null;
+	score.push([name, 0, 0]);
 
 	let url = window.location.href + 'actor/' + id;
 	console.log(url);
@@ -173,12 +181,22 @@ function getActor(id) {
 	http.send();
 }
 
+function checkAnswer() {
+	// comapre event.target.value with question.title;
+	// push values to score array;
+	// clear the input
+	// call randomDataEntry
+	console.log(event.target.value);
+	question = null;
+	quizView(quizTemplate);
+}
+
 // return a random movie for the quiz
 function randomDataEntry() {
 	let count = data.cast.length;
 	let idx = Math.floor(Math.random() * count);
 	let question = data.cast[idx];
-	data.cast[idx] = false;
+	data.cast.splice(idx,1); // remove entry from array
 	return question;
 }
 
@@ -193,16 +211,17 @@ window.onload = function() {
 }
 
 // remove for deployment 
-function switchView(elementId, string) {
-	clearView();
 
-	string = string || 'Lobsta Roll';
+// function switchView(elementId, string) {
+// 	clearView();
 
-	text.content.querySelector('p').innerHTML = string;
+// 	string = string || 'Lobsta Roll';
 
-	var clone = document.importNode(elementId.content, true);
-	content.appendChild(clone);
-}
+// 	text.content.querySelector('p').innerHTML = string;
+
+// 	var clone = document.importNode(elementId.content, true);
+// 	content.appendChild(clone);
+// }
 
 // image.content.querySelector('img').src = 'https://www.sencha.com/wp-content/uploads/2016/02/icon-sencha-test-studio.png';
 
