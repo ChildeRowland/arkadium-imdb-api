@@ -57,7 +57,13 @@
 	</template>
 
 	<template id="quiz">
-		<img height="500px" class="hidden">
+		<div class="quiz-back-drop">
 		<p></p>
+		<img height="500px" 
+			 class="hidden" 
+			 onerror="hideBrokenImage(this)">
+		<input type="text"
+			   class="hidden">
+		</div>
 	</template>
 </html>

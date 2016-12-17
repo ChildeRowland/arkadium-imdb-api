@@ -32,6 +32,11 @@ function clearInput() {
 	document.querySelector('#actor-name').value = '';
 }
 
+// check for broken image paths
+function hideBrokenImage(element) {
+	element.style.display='none';
+}
+
 // check for user search input
 function handleKeyPress(event) {
 	if ( event.keyCode == 13 ) {
@@ -73,6 +78,7 @@ function quizView(element) {
 		quizTemplate.content.querySelector('p').innerHTML = question.title;
 		quizTemplate.content.querySelector('img').src = imageFormat+'/w500/'+question.poster_path;
 		quizTemplate.content.querySelector('img').classList.remove('hidden');
+		quizTemplate.content.querySelector('input').classList.remove('hidden');
 	} else {
 		quizTemplate.content.querySelector('p').innerHTML = "Search for your favorite actor before taking the quiz";
 	}
@@ -128,7 +134,7 @@ function addImgSearch() {
 
 		img.src = imageFormat+'/w185/'+actors.results[i].profile_path;
 		img.className = 'profile-picture';
-		img.onerror = function(){ this.style.display='none' }; // check for broken image path
+		img.onerror = function(){ hideBrokenImage(img) }; // check for broken image path
 		img.onclick = function(){ getActor(actorId) };
 		div.appendChild(img);
 	}
