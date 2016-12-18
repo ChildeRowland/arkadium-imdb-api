@@ -57,16 +57,18 @@
 
 	<template id="quiz">
 		<div class="quiz-back-drop">
-		<p></p>
-		<img height="400px" 
-			 class="hidden" 
-			 onerror="hideBrokenImage(this)">
-		<input type="text"
-			   class="hidden"
-			   name="year"
-			   placeholder="YYYY, then hit enter"
-			   onkeypress="submitFromUser(event, checkAnswer)">
-		<p id="correct-answer"></p>
+			<p></p>
+			<img height="400px" 
+				 class="hidden" 
+				 onerror="hideBrokenImage(this)">
+			<input type="text"
+				   class="hidden"
+				   name="year"
+				   placeholder="YYYY, then hit enter"
+				   onkeypress="submitFromUser(event, checkAnswer)">
+			<div id="correct-answer" class="hidden">
+				<p></p>
+			</div>
 		</div>
 	</template>
 

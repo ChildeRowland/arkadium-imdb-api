@@ -6,6 +6,7 @@ body {
 }
 
 h1 {
+	color: #104e86;
 	display: inline-block;
 	margin-left: inherit;
 	border-bottom: 1px solid yellow;
@@ -53,6 +54,11 @@ input {
 
 /***** QUIZ *****/
 
+.quiz-back-drop p {
+	font-size: 20px;
+    color: #1f0c0c;
+}
+
 .quiz-back-drop img {
 	float: left;
 }
@@ -63,17 +69,18 @@ input {
 	margin-left: 25px;
 }
 
-.hidden {
-	display: none;
-}
-
 #correct-answer {
 	position: absolute;
     top: 50%;  /* position the top  edge of the element at the middle of the parent */
     left: 50%; /* position the left edge of the element at the middle of the parent */
     transform: translate(-50%, -50%);
     display: inline-block;
-	background-color: yellow;
+	background-color: #fdff59;
+	border-radius: 18px;
+}
+
+#correct-answer p {
+	padding: 5px 10px 5px 10px;
 }
 
 /***** NAVIGATION *****/
@@ -127,7 +134,11 @@ input {
 	margin: 10px;
 }
 
+/*****  *****/
 
+.hidden {
+	display: none;
+}
 
 
 /***** MOBILE PORTRIAT *****/

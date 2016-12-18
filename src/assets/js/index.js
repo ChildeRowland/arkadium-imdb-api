@@ -232,13 +232,13 @@ function checkAnswer() {
 	let text = `${correctAnswer}! Released in ${question.release_date.slice(0,4)}`
 
 	element.classList.remove('hidden');
-	element.innerHTML = text;
+	element.querySelector('p').innerHTML = text;
 
 	setTimeout(function() {
 		element.classList.add('hidden');
 		question = null;
 		quizView(quizTemplate);
-	}, 3000);
+	}, 2500);
 }
 
 // return a random movie for the quiz
