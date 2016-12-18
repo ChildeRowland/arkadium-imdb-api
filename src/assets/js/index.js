@@ -210,6 +210,8 @@ function checkAnswer() {
 	let userAnswer = event.target.value.toString();
 	let idx = score.length - 1;
 
+	let element = document.querySelector('#correct-answer');
+
 	if ( question.release_date ) {
 		let year = question.release_date.slice(0,4)
 
@@ -226,8 +228,17 @@ function checkAnswer() {
 	
 	console.log(userAnswer, question.release_date, idx);
 	console.log(score);
-	question = null;
-	quizView(quizTemplate);
+
+	let text = `${correctAnswer}! Released in ${question.release_date.slice(0,4)}`
+
+	element.classList.remove('hidden');
+	element.innerHTML = text;
+
+	setTimeout(function() {
+		element.classList.add('hidden');
+		question = null;
+		quizView(quizTemplate);
+	}, 3000);
 }
 
 // return a random movie for the quiz

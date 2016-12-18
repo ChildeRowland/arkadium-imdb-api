@@ -23,6 +23,7 @@ h4, p {
     padding-left: 15px;
     margin-right: auto;
     margin-left: auto;
+    margin-bottom: 25px;
 }
 
 /***** INPUT FIELD *****/
@@ -52,12 +53,27 @@ input {
 
 /***** QUIZ *****/
 
+.quiz-back-drop img {
+	float: left;
+}
+
 .quiz-back-drop input {
 	width: 50%;
+	margin-top: 100px;
+	margin-left: 25px;
 }
 
 .hidden {
 	display: none;
+}
+
+#correct-answer {
+	position: absolute;
+    top: 50%;  /* position the top  edge of the element at the middle of the parent */
+    left: 50%; /* position the left edge of the element at the middle of the parent */
+    transform: translate(-50%, -50%);
+    display: inline-block;
+	background-color: yellow;
 }
 
 /***** NAVIGATION *****/
@@ -68,6 +84,7 @@ input {
 
 .nav ul {
 	position: relative;
+	display: inline-block;
 	list-style: none;
 }
 
@@ -111,4 +128,22 @@ input {
 }
 
 
+
+
+/***** MOBILE PORTRIAT *****/
+@media (max-width: 640px) {
+	body {
+		text-align: center;
+	}
+
+	.quiz-back-drop img {
+		float: none;
+	}
+
+	.quiz-back-drop input {
+		float: none;
+		margin-top: 15px;
+		margin-left: 15px;
+	}
+}
 
