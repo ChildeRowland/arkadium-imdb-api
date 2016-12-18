@@ -213,7 +213,7 @@ function checkAnswer() {
 	let element = document.querySelector('#correct-answer');
 
 	if ( question.release_date ) {
-		let year = question.release_date.slice(0,4)
+		let year = question.release_date.slice(0,4);
 
 		if ( userAnswer === year ) {
 			correctAnswer = true;
