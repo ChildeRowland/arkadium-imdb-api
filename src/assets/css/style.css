@@ -61,6 +61,7 @@ input {
 
 .quiz-back-drop img {
 	float: left;
+	height: 400px;
 }
 
 .quiz-back-drop input {
@@ -140,10 +141,46 @@ input {
 }
 
 
-/***** MOBILE PORTRIAT *****/
-@media (max-width: 640px) {
-	body {
+/***** MOBILE LANDSCAPE *****/
+@media only screen and (max-device-width: 750px) and (orientation: landscape) {
+	body, .photo-back-drop {
+		background-color: whitesmoke;
 		text-align: center;
+	}
+
+	.quiz-back-drop img {
+		float: left;
+	}
+
+	.quiz-back-drop input {
+		width: 40%;
+    	margin-top: 100px;
+    	margin-left: 10px;
+	}
+
+	#correct-answer {
+	    transform: translate(-50%, 250%);
+	}
+}
+
+
+/***** MOBILE PORTRIAT *****/
+@media screen and (max-width: 640px) and (orientation: portrait) {
+	body, .photo-back-drop {
+		text-align: center;
+		background-color: whitesmoke;
+	}
+
+	.nav {
+		width: 100%;
+	}
+
+	.nav li:first-of-type {
+		margin-left: -50px;
+	}
+
+	.nav a {
+		font-size: 18px;
 	}
 
 	.quiz-back-drop img {
@@ -152,8 +189,13 @@ input {
 
 	.quiz-back-drop input {
 		float: none;
+		width: 75%;
 		margin-top: 15px;
 		margin-left: 15px;
+	}
+
+	#correct-answer {
+	    transform: translate(-50%, 150%);
 	}
 }
 
