@@ -149,6 +149,7 @@ input {
 	}
 
 	.quiz-back-drop img {
+		height: 330px;
 		float: left;
 	}
 
@@ -185,6 +186,7 @@ input {
 
 	.quiz-back-drop img {
 		float: none;
+		height: 375px;
 	}
 
 	.quiz-back-drop input {

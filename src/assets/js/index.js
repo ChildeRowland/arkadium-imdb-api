@@ -129,7 +129,6 @@ function searchApi() {
 		if (this.readyState === this.DONE && http.status === 200) {
 
 			actors = JSON.parse(this.responseText);
-			console.log(actors);
 
 			addImgSearch();
 
@@ -192,7 +191,6 @@ function getActor(id, name) {
 		if (this.readyState === this.DONE && http.status === 200) {
 
 			data = JSON.parse(this.responseText);
-			console.log(data);
 
 			quizView(quizTemplate);
 
@@ -206,6 +204,7 @@ function getActor(id, name) {
 }
 
 function checkAnswer() {
+	let text;
 	let correctAnswer = false;
 	let userAnswer = event.target.value.toString();
 	let idx = score.length - 1;
@@ -224,12 +223,12 @@ function checkAnswer() {
 		}
 
 		score[idx][2]++;
-	}
-	
-	console.log(userAnswer, question.release_date, idx);
-	console.log(score);
 
-	let text = `${correctAnswer}! Released in ${question.release_date.slice(0,4)}`
+		text = `${correctAnswer}! Released in ${question.release_date.slice(0,4)}`;
+
+	} else {
+		text = 'Oops, we couldn\'t find the answer'
+	}
 
 	element.classList.remove('hidden');
 	element.querySelector('p').innerHTML = text;
@@ -250,7 +249,7 @@ function randomDataEntry() {
 	return question;
 }
 
-window.onload = function() {
+function init() {
 	// assign variables for templates views
 	content = document.querySelector('#content');
 	aboutTemplate = document.querySelector('#about');
@@ -261,21 +260,5 @@ window.onload = function() {
 	aboutView(document.querySelector('#default-view'));
 }
 
-// remove for deployment 
-
-// function switchView(elementId, string) {
-// 	clearView();
-
-// 	string = string || 'Lobsta Roll';
-
-// 	text.content.querySelector('p').innerHTML = string;
-
-// 	var clone = document.importNode(elementId.content, true);
-// 	content.appendChild(clone);
-// }
-
-// image.content.querySelector('img').src = 'https://www.sencha.com/wp-content/uploads/2016/02/icon-sencha-test-studio.png';
-
-// document.addEventListener('DOMContentLoaded', init);
-
+document.addEventListener('DOMContentLoaded', init);
 
