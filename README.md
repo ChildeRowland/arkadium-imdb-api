@@ -6,7 +6,9 @@ Deployment to [Heroku](https://arkadium-full-stack.herokuapp.com)
 
 To work with the code:
 
-$ git clone https://github.com/ChildeRowland/arkadium-imdb-api
-$ cd arkadium_assignment
-$ npm install
-$ npm start
+	$ git clone https://github.com/ChildeRowland/arkadium-imdb-api
+	$ cd arkadium_assignment
+	$ npm install
+	$ npm start
+
+To work with the API visit [The Movie Database](http://www.themoviedb.org)
